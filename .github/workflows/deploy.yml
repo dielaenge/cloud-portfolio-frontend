@@ -1,0 +1,43 @@
+# Name of Workflow
+name: Deploy Frotnedn to AWS
+
+# Control when the workflow will run
+on:
+    # trigger the workflow on push events but only on the "main" branch
+    push:
+        branches: ["main"]
+
+    #allow to run this workflow manually from Actions tab
+    workflow_dispatch:
+
+# workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    # this one conatins a single job called "deploy:"
+    deploy:
+        runs-on: ubuntu-latest
+        # permissions needed to get a token from GitHub's OIDC provider
+        permissions:
+            id-token: write
+            contents: read
+        # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+            # Step 1: Checks-out repository under $GITHUB_WORKSPACE, so job can access it
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            
+            # Step2: Configure AWS credentials using OIDC
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                role-to-assume: arn:aws:iam::565393028520:role/GitHubActions-PortfolioFrontend-DeployRole
+                aws-region: eu-central-1
+            
+            # Step 3: Deploy files to S3
+            - name: Sync files to S3 bucket
+              run: |
+                aws s3 sync . s3://cloudground-portfolio-frontend --delete
+            
+            # Step 4: Invalidate CloudFront Cache
+            - name: Invalidate CloudFront distribution
+              run: |
+                aws cloudfront create-invalidation --distribution-id E19VHTW4TNCH3N --paths "/*"
