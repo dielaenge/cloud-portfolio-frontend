@@ -1,4 +1,4 @@
-# Name of Workflow
+# Name of Workflow (will be shown in GitHub Actions)
 name: Deploy Frontend to AWS
 
 # Control when the workflow will run
