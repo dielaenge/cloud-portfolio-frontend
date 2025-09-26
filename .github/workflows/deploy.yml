@@ -1,5 +1,5 @@
 # Name of Workflow
-name: Deploy Frotnedn to AWS
+name: Deploy Frotend to AWS
 
 # Control when the workflow will run
 on:
