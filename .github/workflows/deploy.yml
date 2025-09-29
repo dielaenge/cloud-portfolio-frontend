@@ -15,7 +15,7 @@ jobs:
     # this one conatins a single job called "deploy:"
     deploy:
         runs-on: ubuntu-latest
-        # permissions needed to get a token from GitHub's OIDC provider
+        # permissions needed to get a JWT token from GitHub's OIDC (OpenID Connect) provider
         permissions:
             id-token: write
             contents: read

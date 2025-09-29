@@ -1,5 +1,5 @@
 // Constant to hold the API URL
-const API_URL = "https://9yj4ygvnvl.execute-api.eu-central-1.amazonaws.com/Prod/projects"
+const API_URL = "https://u9jp06g0d1.execute-api.eu-central-1.amazonaws.com/Prod/projects"
 
 // Fetch and render projects function
 
